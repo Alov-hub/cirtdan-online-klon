@@ -1,0 +1,244 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #07090e;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ARKA PLAN DÖNEN LOOP EFEKTİ */
+.bg-loop-animation {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200vw;
+    height: 200vh;
+    background: radial-gradient(circle, rgba(20, 27, 45, 0.4) 0%, rgba(7, 9, 14, 0.95) 70%);
+    animation: rotateLoop 25s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes rotateLoop {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* SOL SİDEBAR MENÜ */
+.sidebar {
+    width: 65px;
+    background-color: rgba(18, 22, 34, 0.9);
+    border-right: 1px solid #1e2538;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 15px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.sidebar .icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 16px;
+}
+
+.sidebar .icon:hover, .sidebar .icon.active {
+    background-color: #1e293b;
+    color: #38bdf8;
+}
+
+/* ANA TAŞIYICI */
+.main-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* ÜST HEADER - LOGO BOYUTU DÜZELTİLDİ */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 30px;
+    background-color: rgba(18, 22, 34, 0.85);
+    border-bottom: 1px solid #1e2538;
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 9;
+}
+
+.site-logo {
+    height: 28px !important; /* İstediğin gibi logo boyutu küçültüldü ve hizalandı */
+    object-fit: contain;
+}
+
+.search-bar {
+    background-color: #151a2b;
+    border: 1px solid #2a344d;
+    border-radius: 20px;
+    padding: 8px 18px;
+    width: 320px;
+    color: #fff;
+    font-size: 13px;
+    outline: none;
+}
+
+.search-bar:focus {
+    border-color: #38bdf8;
+}
+
+.lang-switcher select {
+    background-color: #151a2b;
+    color: #fff;
+    border: 1px solid #2a344d;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* KATEGORİ MENÜSÜ */
+nav.categories {
+    background-color: rgba(11, 15, 24, 0.8);
+    padding: 12px 30px;
+    border-bottom: 1px solid #1e2538;
+}
+
+nav.categories ul {
+    display: flex;
+    list-style: none;
+    gap: 12px;
+    overflow-x: auto;
+}
+
+nav.categories ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 18px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    background-color: #131826;
+    border: 1px solid #1c2438;
+}
+
+nav.categories ul li a:hover,
+nav.categories ul li a.active {
+    color: #ffffff;
+    background-color: #38bdf8;
+    border-color: #38bdf8;
+}
+
+/* İÇERİK ALANI & GRID */
+.content-body {
+    padding: 25px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+section h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #f8fafc;
+    margin-bottom: 15px;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 18px;
+}
+
+.game-card {
+    background-color: rgba(21, 26, 45, 0.75);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #1e263d;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+}
+
+.game-card:hover {
+    transform: translateY(-4px);
+    border-color: #38bdf8;
+    box-shadow: 0 8px 20px rgba(56, 189, 248, 0.15);
+}
+
+.game-card a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.game-card img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    background-color: #1a2238;
+}
+
+.game-info {
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.game-info h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #64748b;
+}
+
+/* FOOTER */
+footer {
+    background-color: rgba(18, 22, 34, 0.9);
+    padding: 15px 30px;
+    border-top: 1px solid #1e2538;
+    display: flex;
+    justify-content: center;
+    color: #64748b;
+    font-size: 12px;
+    margin-top: auto;
+}

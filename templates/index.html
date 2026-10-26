@@ -1,0 +1,131 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Cırtdan - {% trans "MİLLİ ƏYLƏNCƏ PORTALI" %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- ARKA PLAN DÖNEN LOOP EFEKTİ -->
+    <div class="bg-loop-animation"></div>
+
+    <!-- SOL SİDEBAR İKONLAR -->
+    <aside class="sidebar">
+        <div class="icon active" title="Ana səhifə">🏠</div>
+        <div class="icon" title="Populyar">🔥</div>
+        <div class="icon" title="Oyunlar">🎮</div>
+        <div class="icon" title="Məntiq">🧩</div>
+        <div class="icon" title="Seçilmişlər">⭐</div>
+        <div class="icon" title="Turnirlər">🏆</div>
+        <div class="icon" title="Ayarlar">⚙️</div>
+    </aside>
+
+    <!-- ANA İÇERİK ALANI -->
+    <div class="main-container">
+        
+        <!-- ÜST HEADER -->
+        <header>
+            <div class="logo-area">
+                <a href="{% url 'index' %}">
+                    <img src="https://cirtdan.online/images/cirtdan_logo.png" alt="Cırtdan Logo" class="site-logo">
+                </a>
+            </div>
+            
+            <input type="text" class="search-bar" placeholder="Oyun axtar / Search game...">
+
+            <div class="lang-switcher">
+                <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <select name="language" onchange="this.form.submit()">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang in LANGUAGES %}
+                            <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %}selected{% endif %}>
+                                {{ lang.1 }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </header>
+
+        <!-- KATEGORİLER -->
+        <nav class="categories">
+            <ul>
+                <li><a href="{% url 'kategori' 'all' %}" class="{% if aktif_kategori == 'all' %}active{% endif %}">{% trans "Hamısı" %}</a></li>
+                <li><a href="{% url 'kategori' 'catPopular' %}" class="{% if aktif_kategori == 'catPopular' %}active{% endif %}">{% trans "Populyar" %}</a></li>
+                <li><a href="{% url 'kategori' 'catNew' %}" class="{% if aktif_kategori == 'catNew' %}active{% endif %}">{% trans "Yeni Yüklənənlər" %}</a></li>
+                <li><a href="{% url 'kategori' 'catAlov' %}" class="{% if aktif_kategori == 'catAlov' %}active{% endif %}">Alov Originals</a></li>
+                <li><a href="{% url 'kategori' 'catOnline' %}" class="{% if aktif_kategori == 'catOnline' %}active{% endif %}">Onlayn / PvP</a></li>
+                <li><a href="{% url 'kategori' 'catLogic' %}" class="{% if aktif_kategori == 'catLogic' %}active{% endif %}">{% trans "Məntiq" %}</a></li>
+                <li><a href="{% url 'kategori' 'catAction' %}" class="{% if aktif_kategori == 'catAction' %}active{% endif %}">Aksiyon</a></li>
+                <li><a href="{% url 'kategori' 'catRacing' %}" class="{% if aktif_kategori == 'catRacing' %}active{% endif %}">Yarış</a></li>
+                <li><a href="{% url 'kategori' 'catKids' %}" class="{% if aktif_kategori == 'catKids' %}active{% endif %}">Uşaqlar</a></li>
+            </ul>
+        </nav>
+
+        <!-- İÇERİK BÖLÜMLERİ -->
+        <div class="content-body">
+            
+            <!-- 1. SEÇİLMİŞ OYUNLAR VİTRİNİ -->
+            <section>
+                <h2>⭐ {% trans "Seçilmiş Oyunlar Vitrini" %}</h2>
+                <div class="game-grid">
+                    {% for oyun in oyunlar %}
+                    <div class="game-card">
+                        <a href="#">
+                            <img src="https://cirtdan.online/{{ oyun.logo }}" alt="{{ oyun.isim }}">
+                            <div class="game-info">
+                                <h3>{{ oyun.isim }}</h3>
+                                <div class="game-meta">
+                                    <span>Alov studios</span>
+                                    <span>⭐ 5.0</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% empty %}
+                    <div class="no-games">
+                        <p>{% trans "Bu kateqoriyada oyun tapılmadı." %}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- 2. ALOV ORIGINALS BÖLÜMÜ -->
+            <section>
+                <h2>🔥 ALOV ORIGINALS</h2>
+                <div class="game-grid">
+                    {% for oyun in alov_originals %}
+                    <div class="game-card">
+                        <a href="#">
+                            <img src="https://cirtdan.online/{{ oyun.logo }}" alt="{{ oyun.isim }}">
+                            <div class="game-info">
+                                <h3>{{ oyun.isim }}</h3>
+                                <div class="game-meta">
+                                    <span>Alov studios</span>
+                                    <span>👁️ 152</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="stats">
+                <span>{% trans "Unikal Baxış:" %} 6,117</span> | 
+                <span>{% trans "Oyunçu:" %} 6</span> | 
+                <span>9 aktiv oyun</span>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
